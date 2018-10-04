@@ -96,7 +96,7 @@ public class ProductController {
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
         binder.setAllowedFields("productId", "name", "unitPrice", "description", "manufacturer", "category",
-                "unitsInStock", "condition", "productImage");
+                "unitsInStock", "condition", "productImage", "language");
     }
     
     @ExceptionHandler(ProductNotFoundException.class)
@@ -107,5 +107,10 @@ public class ProductController {
         mav.addObject("url", req.getRequestURL() + "?" + req.getQueryString());
         mav.setViewName("productNotFound");
         return mav;
+    }
+    
+    @RequestMapping("/invalidPromoCode")
+    public String invalidPromoCode() {
+        return "invalidPromoCode";
     }
 }
