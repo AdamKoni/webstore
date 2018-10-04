@@ -8,6 +8,8 @@ import com.packt.webstore.domain.Product;
 import com.packt.webstore.exception.NoProductsFoundUnderCategoryException;
 import com.packt.webstore.exception.ProductNotFoundException;
 import com.packt.webstore.service.ProductService;
+import com.packt.webstore.validator.ProductValidator;
+import com.packt.webstore.validator.UnitsInStockValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/products")
@@ -26,6 +29,9 @@ public class ProductController {
     
     @Autowired
     private ProductService productService;
+    
+    @Autowired
+    private ProductValidator productValidator;
     
     @RequestMapping
     public String list(Model model) {
@@ -71,7 +77,11 @@ public class ProductController {
     }
     
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewProductForm(@ModelAttribute("newProduct") Product productToBeAdded, BindingResult result, HttpServletRequest request) {
+    public String processAddNewProductForm(@ModelAttribute("newProduct") @Valid Product productToBeAdded, BindingResult
+            result, HttpServletRequest request) {
+        if(result.hasErrors()) {
+            return "addProduct";
+        }
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Proba wiazania niedozwolonych pol: " + StringUtils.arrayToCommaDelimitedString
@@ -97,6 +107,7 @@ public class ProductController {
     public void initialiseBinder(WebDataBinder binder) {
         binder.setAllowedFields("productId", "name", "unitPrice", "description", "manufacturer", "category",
                 "unitsInStock", "condition", "productImage", "language");
+        binder.setValidator(productValidator);
     }
     
     @ExceptionHandler(ProductNotFoundException.class)

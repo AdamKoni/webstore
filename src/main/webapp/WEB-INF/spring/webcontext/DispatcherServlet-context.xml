@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
 
-    <mvc:annotation-driven enable-matrix-variables="true"/>
+    <mvc:annotation-driven enable-matrix-variables="true" validator="validator"/>
 
     <mvc:resources location="/resources/" mapping="/resource/**"/>
 
@@ -17,18 +17,18 @@
     </mvc:interceptors>
 
     <mvc:interceptors>
-        <bean class= "com.packt.webstore.interceptor.PerformanceMonitorInterceptor"/>
-        <bean class= "org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <bean class="com.packt.webstore.interceptor.PerformanceMonitorInterceptor"/>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
             <property name="paramName" value="language"/>
         </bean>
     </mvc:interceptors>
 
     <mvc:interceptors>
         <bean class="com.packt.webstore.interceptor.PerformanceMonitorInterceptor"/>
-        <bean class= "org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
             <property name="paramName" value="language"/>
         </bean>
-        <bean class= "com.packt.webstore.interceptor.AuditingInterceptor"/>
+        <bean class="com.packt.webstore.interceptor.AuditingInterceptor"/>
     </mvc:interceptors>
 
     <mvc:interceptors>
@@ -95,4 +95,20 @@
           class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
         <property name="defaultLocale" value="pl"/>
     </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <bean id="productValidator" class="com.packt.webstore.validator.ProductValidator">
+        <property name="springValidators">
+            <set>
+                <ref bean="unitsInStockValidator"/>
+                <ref bean="ProductImageValidator"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="unitsInStockValidator" class="com.packt.webstore.validator.UnitsInStockValidator"/>
+    <bean id="ProductImageValidator" class="com.packt.webstore.validator.ProductImageValidator"/>
 </beans>
