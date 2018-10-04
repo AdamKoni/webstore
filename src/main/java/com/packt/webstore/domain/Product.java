@@ -2,11 +2,16 @@ package com.packt.webstore.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
+@XmlRootElement
 public class Product {
     private String productId;
     private String name;
@@ -18,7 +23,9 @@ public class Product {
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;
-
+    @JsonIgnore
+    private MultipartFile productImage;
+    
     public Product() {
         super();
     }
@@ -28,7 +35,12 @@ public class Product {
         this.name = name;
         this.unitPrice = unitPrice;
     }
-
+    
+    @XmlTransient
+    public MultipartFile getProductImage() {
+        return productImage;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
