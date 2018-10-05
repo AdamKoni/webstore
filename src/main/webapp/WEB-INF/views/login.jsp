@@ -9,15 +9,7 @@
 <link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <title>Produkty</title>
 </head>
-<body>
-	<section>
-		<div class="jumbotron">
-			<div class="container">
-				<h1>Produkty</h1>
-				<p>Dodaj produkty</p>
-			</div>
-		</div>
-	</section>
+
 <div class="container">
     <div class="row">
 		<div class="col-md-4 col-md-offset-4">
@@ -39,7 +31,7 @@
 			    		<div class="form-group">
 			    			<input class="form-control" placeholder="Hasło" name='j_password'  type="password" value="">
 			    		</div>
-			    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Zaloguj się">
+			    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Zaloguj">
 			    	</fieldset>
 			      	</form>
 			    </div>
@@ -47,4 +39,4 @@
 		</div>
 	</div>
 </div>
-</body>
+</html>

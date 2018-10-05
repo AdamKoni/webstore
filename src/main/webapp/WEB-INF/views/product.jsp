@@ -10,20 +10,14 @@
     <script src="/resource/js/controllers.js"></script>
     <title>Produkty</title>
 </head>
-<body>
-<section>
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Produkty</h1>
-        </div>
-    </div>
-</section>
+
 <section class="container" ng-app="cartApp">
     <div class="row">
         <div class="col-md-5">
             <img src="<c:url value="/resource/images/${product.productId}.png"></c:url>" alt="image"
                  style="width:100%"/>
         </div>
+
         <div class="col-md-5">
             <h3>${product.name}</h3>
             <p>${product.description}</p>
@@ -49,12 +43,14 @@
                 <a href="<spring:url value="/cart" />" class="btn btn-default">
                     <span class="glyphicon-hand-right glyphicon"></span> Koszyk
                 </a>
+
                 <a href="<spring:url value="/products" />" class="btn btn-default">
                     <span class="glyphicon-hand-left glyphicon"></span> wstecz
                 </a>
+
             </p>
+
         </div>
     </div>
 </section>
-</body>
 </html>

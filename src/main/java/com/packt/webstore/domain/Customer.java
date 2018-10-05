@@ -1,26 +1,39 @@
 package com.packt.webstore.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class Customer {
+public class Customer implements Serializable {
+    private static final long serialVersionUID = 2284040482222162898L;
     private String customerId;
     private String name;
-    private String address;
-    private long noOfOrdersMade;
-
+    private Address billingAddress;
+    private String phoneNumber;
+    
     public Customer() {
         super();
+        this.billingAddress = new Address();
     }
-
+    
     public Customer(String customerId, String name) {
+        this();
         this.customerId = customerId;
         this.name = name;
     }
-
+    
+    @Override
+    public int hashCode() {
+        final int prime = 853;
+        int result = 1;
+        result = prime * result
+                + ((customerId == null) ? 0 : customerId.hashCode());
+        return result;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -36,18 +49,5 @@ public class Customer {
         } else if (!customerId.equals(other.customerId))
             return false;
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Klient [customerId=" + customerId + ", imię i nazwisko=" + name + "]";
     }
 }
